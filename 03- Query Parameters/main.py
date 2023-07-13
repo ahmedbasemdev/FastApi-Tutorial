@@ -35,7 +35,7 @@ async def root() -> dict:
 
     return {"message": "Hello World"}
 
-
+# path parameters
 @api_router.get("/recipe/{recipe_id}",status_code=200)
 def get_recipe(*, recipe_id: int) -> dict:
 
@@ -43,6 +43,10 @@ def get_recipe(*, recipe_id: int) -> dict:
 
     if result:
         return result[0]
+
+# Query Parameters
+
+
 
 
 app.include_router(api_router)
