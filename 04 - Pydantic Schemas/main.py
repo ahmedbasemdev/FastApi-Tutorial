@@ -1,6 +1,6 @@
 # creating a FastAPI app is to declare the application object of FastAPI class
 from typing import Optional
-
+from schemas import *
 import uvicorn
 from fastapi import FastAPI, APIRouter
 
@@ -30,9 +30,6 @@ app = FastAPI(title="My Application")
 api_router = APIRouter()
 
 
-@api_router.get('/', status_code=200)
-async def root() -> dict:
-    return {"message": "Hello World"}
 
 
 # path parameters
@@ -44,16 +41,13 @@ def get_recipe(*, recipe_id: int) -> dict:
         return result[0]
 
 
-# Query Parameters
-@api_router.get('/search/')
-def search(keyword: str, length: int = 2):
+## Part 4
 
-    if not keyword:
-        return {"Recipes": RECIPES[:length]}
+@api_router.post("/recipe/", status_code=201 , response_model=Recipe)
+def create_recipe(*, recipe_in:RecipeCreate):
 
-    results = [recipe for recipe in RECIPES if keyword.lower() in recipe['label'].lower()]
 
-    return {"Recipes" : results[:length]}
+
 
 
 app.include_router(api_router)
