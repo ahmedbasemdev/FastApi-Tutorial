@@ -2,7 +2,7 @@
 from typing import Optional
 from schemas import *
 import uvicorn
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter,HTTPException
 
 RECIPES = [
     {
@@ -35,6 +35,10 @@ api_router = APIRouter()
 def get_recipe(*, recipe_id: int) -> dict:
     result = [recipe for recipe in RECIPES if recipe['id'] == recipe_id]
 
+    if not result:
+        raise HTTPException(
+            status_code=404,detail=f"Recipe with Id {recipe_id} Not Found"
+        )
     if result:
         return result[0]
 
