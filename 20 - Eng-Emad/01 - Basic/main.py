@@ -26,12 +26,16 @@ def say_hello(id: int, name: str):
 def root(item: Item = Body()):
     return {**item.dict()}
 
+
 # Body() tells fastapi that you will get this item
 # from body
-@app.put('/product/{id}')
-def upgradeProduct(id: int, product: Product = Body()):
-    return {"result": f"id of product os {id}" , **product.dict()}
+@app.put('/product/{id}/{key}')
+def upgradeProduct(id: int, key: int, product: Product = Body()):
+    return {"result": f"id of product os {id}", **product.dict()}
 
+
+# @app.method("/path/{path_parameters}")
+# def fun(path_parameters , query_param , body):
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host='0.0.0.0', port=8001, reload=True)
