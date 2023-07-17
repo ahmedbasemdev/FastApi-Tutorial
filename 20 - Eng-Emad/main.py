@@ -26,7 +26,8 @@ def say_hello(id: int, name: str):
 def root(item: Item = Body()):
     return {**item.dict()}
 
-
+# Body() tells fastapi that you will get this item
+# from body
 @app.put('/product/{id}')
 def upgradeProduct(id: int, product: Product = Body()):
     return {"result": f"id of product os {id}" , **product.dict()}
